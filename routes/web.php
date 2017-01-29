@@ -13,10 +13,12 @@
 
 Auth::routes();
 
-Route::middleware('auth')->group(function() {
+Route::middleware('auth')->group(function () {
     Route::name('dashboard')->get('/', 'DashboardController@index');
     Route::name('profile')->get('my-profile', 'DashboardController@profile');
-    
+
     Route::resource('user', 'UserController');
     Route::name('user.change-password')->patch('change-password/{user}', 'UserController@changePassword');
+
+    Route::name('google-plus')->get('google-plus', 'GooglePlusController@index');
 });

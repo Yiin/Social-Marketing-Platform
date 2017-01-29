@@ -1,5 +1,6 @@
 /node_modules
-/public/storage
+/public/assets/css/app.css
+/public/assets/css/light-bootstrap-dashboard.css
 /public/hot
 /storage/*.key
 /vendor
@@ -7,3 +8,4 @@
 Homestead.json
 Homestead.yaml
 .env
+/template-files

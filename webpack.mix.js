@@ -1,4 +1,4 @@
-const { mix } = require('laravel-mix');
+const {mix} = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,7 +11,9 @@ const { mix } = require('laravel-mix');
  |
  */
 
- mix.disableNotifications();
+mix.disableNotifications();
 
 mix.js('resources/assets/js/app.js', 'public/assets/js')
-   .sass('resources/assets/sass/app.scss', 'public/assets/css');
+    .sass('resources/assets/sass/app.scss', 'public/assets/css')
+    .sass('resources/assets/sass/light-bootstrap-dashboard.scss', 'public/assets/css')
+;

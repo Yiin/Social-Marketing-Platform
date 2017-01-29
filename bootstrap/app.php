@@ -12,8 +12,19 @@
 */
 
 $app = new Illuminate\Foundation\Application(
-    realpath(__DIR__.'/../')
+    realpath(__DIR__ . '/../')
 );
+
+/**
+ * Include App\Vendor files
+ */
+
+$includePath = get_include_path();
+set_include_path(base_path('/app/Vendor/'));
+foreach (glob(base_path('/app/Vendor/*.php')) as $filename) {
+    include $filename;
+}
+set_include_path($includePath);
 
 /*
 |--------------------------------------------------------------------------
