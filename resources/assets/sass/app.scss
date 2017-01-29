@@ -1,0 +1,26 @@
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+@import "loading-btn";
+@import "sidebar";
+
+.footer:not(.footer-big) nav > ul li.bc-step {
+    position: relative;
+    padding-right: 15px;
+
+    &::after {
+        content: "|";
+        position: absolute;
+        top: 10px;
+        right: 0px;
+        font-size: 19px;
+        color: #eff1f4;
+    }
+}
