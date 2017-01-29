@@ -1,117 +1,136 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/png" href="../../assets/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Social Marketing Platform') }}</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+    <meta name="viewport" content="width=device-width"/>
+
 
     <!-- Bootstrap core CSS     -->
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet"/>
 
-    <!-- Animation library for notifications   -->
-    <link href="{{ asset('assets/css/animate.min.css') }}" rel="stylesheet"/>
+    <!--  Light Bootstrap Dashboard core CSS    -->
+    <link href="../../assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
 
-    <!--  Light Bootstrap Table core CSS    -->
-    <link href="{{ asset('assets/css/light-bootstrap-dashboard.css') }}" rel="stylesheet"/>
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="../../assets/css/demo.css" rel="stylesheet"/>
+
 
     <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link href="{{ asset('assets/css/pe-icon-7-stroke.css') }}" rel="stylesheet" />
-    
-    <!-- Styles -->
-    <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
+    <link href="../../assets/css/pe-icon-7-stroke.css" rel="stylesheet"/>
 
-    <!-- Scripts -->
-    <script>
-        window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-        ]) !!};
-    </script>
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+<nav class="navbar navbar-transparent navbar-absolute">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../dashboard.html">Light Bootstrap Dashboard PRO</a>
+        </div>
+        <div class="collapse navbar-collapse">
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{{ url('/register') }}">
+                        Register
                     </a>
-                </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
+<div class="wrapper wrapper-full-page">
+    <div class="full-page login-page" data-color="blue" data-image="{{ asset('assets/img/full-screen-image-1.jpg') }}">
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+        <!--   you can change the color of the filter page using: data-color="blue | azure | green | orange | red | purple" -->
+        <div class="content">
+            @yield('content')
+        </div>
 
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ url('/logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        @yield('content')
     </div>
 
-    <!--   Core JS Files   -->
-    <script src="{{ asset('assets/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+</div>
 
-    <!--  Checkbox, Radio & Switch Plugins -->
-    <script src="{{ asset('assets/js/bootstrap-checkbox-radio-switch.js') }}"></script>
 
-    <!--  Charts Plugin -->
-    <script src="{{ asset('assets/js/chartist.min.js') }}"></script>
-
-    <!--  Notifications Plugin    -->
-    <script src="{{ asset('assets/js/bootstrap-notify.js') }}"></script>
-
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-    <script src="{{ asset('assets/js/light-bootstrap-dashboard.js') }}"></script>
-
-    <!-- Scripts -->
-    <script src="{{ asset('assets/js/app.js') }}"></script>
 </body>
+
+<!--   Core JS Files and PerfectScrollbar library inside jquery.ui   -->
+<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+
+
+<!--  Forms Validations Plugin -->
+<script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
+
+<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+<script src="{{ asset('assets/js/moment.min.js') }}"></script>
+
+<!--  Date Time Picker Plugin is included in this js file -->
+<script src="{{ asset('assets/js/bootstrap-datetimepicker.js') }}"></script>
+
+<!--  Select Picker Plugin -->
+<script src="{{ asset('assets/js/bootstrap-selectpicker.js') }}"></script>
+
+<!--  Checkbox, Radio, Switch and Tags Input Plugins -->
+<script src="{{ asset('assets/js/bootstrap-checkbox-radio-switch-tags.js') }}"></script>
+
+<!--  Charts Plugin -->
+<script src="{{ asset('assets/js/chartist.min.js') }}"></script>
+
+<!--  Notifications Plugin    -->
+<script src="{{ asset('assets/js/bootstrap-notify.js') }}"></script>
+
+<!-- Sweet Alert 2 plugin -->
+<script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
+
+<!-- Vector Map plugin -->
+<script src="{{ asset('assets/js/jquery-jvectormap.js') }}"></script>
+
+<!--  Google Maps Plugin    -->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+<!-- Wizard Plugin    -->
+<script src="{{ asset('assets/js/jquery.bootstrap.wizard.min.js') }}"></script>
+
+<!--  Datatable Plugin    -->
+<script src="{{ asset('assets/js/bootstrap-table.js') }}"></script>
+
+<!--  Full Calendar Plugin    -->
+<script src="{{ asset('assets/js/fullcalendar.min.js') }}"></script>
+
+<!-- Light Bootstrap Dashboard Core javascript and methods -->
+<script src="{{ asset('assets/js/light-bootstrap-dashboard.js') }}"></script>
+
+<!-- Scripts -->
+<script src="{{ asset('assets/js/app.js') }}"></script>
+
+<script type="text/javascript">
+    $().ready(function () {
+        lbd.checkFullPageBackgroundImage();
+
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.card').removeClass('card-hidden');
+        }, 700)
+    });
+</script>
+
 </html>

@@ -8,27 +8,28 @@ class ComposerServiceProvider extends ServiceProvider
 {
     protected $pages;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->pages = collect([
             [
                 'title' => 'Dashboard',
                 'icon' => 'pe-7s-graph',
-                'route' => 'dashboard', 
+                'route' => 'dashboard',
             ],
             [
                 'title' => 'My Profile',
                 'icon' => 'pe-7s-user',
-                'route' => 'profile', 
+                'route' => 'profile',
             ],
             [
                 'title' => 'Google+',
                 'icon' => 'fa fa-google-plus',
-                'route' => 'dashboard', 
+                'route' => 'google-plus',
             ],
             [
                 'title' => 'Facebook',
                 'icon' => 'fa fa-facebook',
-                'route' => 'dashboard', 
+                'route' => 'dashboard',
             ],
         ]);
     }
@@ -42,9 +43,9 @@ class ComposerServiceProvider extends ServiceProvider
     {
         \View::composer('*', function ($view) {
             $view->with('user', \Auth::user())
-                 ->with('currentPageTitle', $this->currentPageTitle())
-                 ->with('currentPageIcon', $this->currentPageIcon())
-                 ->with('navLinks', $this->navLinks());
+                ->with('currentPageTitle', $this->currentPageTitle())
+                ->with('currentPageIcon', $this->currentPageIcon())
+                ->with('navLinks', $this->navLinks());
         });
     }
 
@@ -62,7 +63,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         $navLinks = [];
 
-        foreach($this->pages as $linkData) {
+        foreach ($this->pages as $linkData) {
             $link = new \stdClass;
 
             $link->route = $linkData['route'];

@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -13,7 +12,10 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.component('example', require('./components/Example.vue'));
+Vue.component(
+    'google-plus-accounts-table',
+    require('./components/GooglePlusAccountsTable.vue')
+);
 
 const app = new Vue({
     el: '#app'

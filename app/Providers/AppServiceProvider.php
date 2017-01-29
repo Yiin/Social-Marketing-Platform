@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Services\CurlService;
 use App\Services\FacebookPagesService;
 use App\Services\GooglePlusService;
 use App\Services\LinkedInService;
 use App\Services\UserService;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use nxsAPI_FP;
 use nxsAPI_GP;
@@ -20,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
+
         \Validator::extend('password', function ($attribute, $value, $parameters, $validator) {
             return \Hash::check($value, $parameters[0]);
         });
@@ -32,6 +36,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // HTTP Requests
+        $this->app->singleton('App\Service\CurlService', function ($app) {
+            return new CurlService;
+        });
+
         // Users
         $this->app->singleton('App\Service\UserService', function ($app) {
             return new UserService;
