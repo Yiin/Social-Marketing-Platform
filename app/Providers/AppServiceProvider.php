@@ -2,7 +2,14 @@
 
 namespace App\Providers;
 
+use App\Services\FacebookPagesService;
+use App\Services\GooglePlusService;
+use App\Services\LinkedInService;
+use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
+use nxsAPI_FP;
+use nxsAPI_GP;
+use nxsAPI_LI;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,8 +32,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Users
         $this->app->singleton('App\Service\UserService', function ($app) {
-            return new \App\Service\UserService;
+            return new UserService;
+        });
+
+        // GooglePlusService
+        $this->app->singleton('App\Service\GooglePlusService', function ($app) {
+            return new GooglePlusService(new nxsAPI_GP);
+        });
+
+        // FacebookPagesService
+        $this->app->singleton('App\Service\FacebookPagesService', function ($app) {
+            return new FacebookPagesService(new nxsAPI_FP);
+        });
+
+        // LinkedInService
+        $this->app->singleton('App\Service\LinkedInService', function ($app) {
+            return new LinkedInService(new nxsAPI_LI);
         });
     }
 }
