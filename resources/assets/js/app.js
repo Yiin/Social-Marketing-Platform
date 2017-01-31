@@ -17,6 +17,11 @@ Vue.component(
     require('./components/GooglePlusAccountsTable.vue')
 );
 
+Vue.component(
+    'google-plus-posting-panels',
+    require('./components/GooglePlusPostingPanels.vue')
+);
+
 const app = new Vue({
     el: '#app'
 });

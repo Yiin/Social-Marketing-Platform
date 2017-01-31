@@ -13,4 +13,5 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/google-plus-accounts', 'GooglePlusController@accounts');
+Route::middleware('auth:api')->group(function () {
+});

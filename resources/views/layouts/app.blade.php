@@ -30,6 +30,7 @@
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
+            'apiToken' => $user->api_token
         ]) !!};
     </script>
 
@@ -162,9 +163,6 @@
 
 <!-- Sweet Alert 2 plugin -->
 <script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
-
-<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-<script src="{{ asset('assets/js/light-bootstrap-dashboard.js') }}"></script>
 
 <!-- Scripts -->
 <script src="{{ asset('assets/js/app.js') }}"></script>

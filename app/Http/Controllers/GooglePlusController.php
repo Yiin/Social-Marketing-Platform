@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddGooglePlusAccount;
+use App\Http\Requests\GetGooglePlusAccountCommunities;
+use App\Http\Requests\GetGooglePlusCommunityInfo;
+use App\Http\Requests\GooglePlusPost;
+use App\Http\Requests\LogoutGooglePlusAccount;
 use App\Services\GooglePlusService;
-use Illuminate\Http\Request;
 
 class GooglePlusController extends Controller
 {
@@ -19,8 +23,39 @@ class GooglePlusController extends Controller
         return view('google-plus');
     }
 
+    public function post(GooglePlusPost $request)
+    {
+        $this->googlePlusService->queuePost($request->message, $request->url, $request->isImageUrl, $request->queue);
+
+        return response('OK');
+    }
+
     public function accounts()
     {
         return $this->googlePlusService->getAccounts();
+    }
+
+    public function addAccount(AddGooglePlusAccount $request)
+    {
+        if ($this->googlePlusService->addAccount($request->username, $request->password)) {
+            return $this->googlePlusService->getAccounts();
+        }
+        return response()->json([
+            'password' => ['Invalid credentials.']
+        ], 422);
+    }
+
+    public function logoutAccount(LogoutGooglePlusAccount $request)
+    {
+        $this->googlePlusService->logoutAccount($request->account['username']);
+
+        return $this->googlePlusService->getAccounts();
+    }
+
+    public function accountCommunities(GetGooglePlusAccountCommunities $request)
+    {
+        $this->googlePlusService->selectAccount($request->username);
+
+        return $this->googlePlusService->getCommunities();
     }
 }
