@@ -13,9 +13,17 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
+        'App\Events\QueueStarted' => [
+            'App\Listeners\InitQueueStatistics',
+            'App\Listeners\QueueLogging',
         ],
+        'App\Events\QueueUpdate' => [
+            'App\Listeners\CollectQueueStatistics',
+            'App\Listeners\QueueLogging',
+        ],
+        'App\Events\AuthenticationFailed' => [
+            'App\Listeners\QueueLogging',
+        ]
     ];
 
     /**

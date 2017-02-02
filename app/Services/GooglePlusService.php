@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Client;
 use App\Jobs\PostToGooglePlus;
 use nxsAPI_GP;
 use simple_html_dom;
@@ -23,32 +24,62 @@ class GooglePlusService
     private $curl;
 
     /**
+     * @var \App\Services\QueueService
+     */
+    private $queueService;
+
+    /**
      * GooglePlusService constructor.
      *
      * @param nxsAPI_GP $api
+     * @param CurlService $curl
      */
-    public function __construct(nxsAPI_GP $api)
+    public function __construct(nxsAPI_GP $api, CurlService $curl)
     {
         $this->api = $api;
-        $this->curl = resolve('App\Services\CurlService');
+        $this->curl = $curl;
     }
 
-    public function queuePost($message, $url, $isImageUrl, $queue)
+    /**
+     * Dispatch jobs from queue to send posts to communities
+     *
+     * @param Client $client
+     * @param $message
+     * @param $url
+     * @param $isImageUrl
+     * @param array $list
+     */
+    public function queuePost(Client $client, $message, $url, $isImageUrl, $list)
     {
-        foreach ($queue as $queueItem) {
-            $communityId = $queueItem['communityId'];
-            $username = $queueItem['username'];
-            $password = $this->getAccountPassword($username);
+        /**
+         * @var QueueService $queueService
+         */
+        $queueService = resolve('App\Services\QueueService');
+
+        $queue = $queueService->init($client);
+
+        $jobs = [];
+
+        foreach ($list as $item) {
+            $password = $this->getAccountPassword($item['username']);
+            $categories = $this->getCommunityCategories($item['categoryId']);
 
             if (!$password) {
+                QueueService::log($queue,
+                    "Couldn't sign in with account {$item['username']}. Password not found.");
                 continue;
             }
 
-            dispatch(new PostToGooglePlus(
-                    auth()->user(), $username, $password, $message, $url, $isImageUrl, $communityId,
-                    $this->getCommunityCategories($communityId))
+            $jobs [] = new PostToGooglePlus($queue,
+                // auth
+                $item['username'], $password,
+                // where we should post
+                $item['communityId'], $categories,
+                // what we should post
+                $message, $url, $isImageUrl
             );
         }
+        $queueService->start($queue, $jobs);
     }
 
     public function post($username, $password, $message, $url, $isImageUrl, $communityId, $categoryId)
@@ -64,9 +95,8 @@ class GooglePlusService
                 'img' => $url
             ];
         }
-        $this->api->postGP($message, $url, '', $communityId, $categoryId);
 
-        return true;
+        return $this->api->postGP($message, $url, '', $communityId, $categoryId);
     }
 
     /**

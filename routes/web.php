@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('user', 'UserController');
     Route::name('user.change-password')->patch('change-password/{user}', 'UserController@changePassword');
 
+    Route::resource('client', 'ClientController');
+
     Route::name('google-plus')->get('google-plus', 'GooglePlusController@index');
     Route::get('api/google-plus/accounts', 'GooglePlusController@accounts');
     Route::post('api/google-plus/add-account', 'GooglePlusController@addAccount');

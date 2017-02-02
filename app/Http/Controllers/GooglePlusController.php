@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\Http\Requests\AddGooglePlusAccount;
 use App\Http\Requests\GetGooglePlusAccountCommunities;
 use App\Http\Requests\GetGooglePlusCommunityInfo;
@@ -25,7 +26,11 @@ class GooglePlusController extends Controller
 
     public function post(GooglePlusPost $request)
     {
-        $this->googlePlusService->queuePost($request->message, $request->url, $request->isImageUrl, $request->queue);
+        $client = Client::find($request->client_id);
+
+        $this->googlePlusService->queuePost(
+            $client, $request->message, $request->url, $request->isImageUrl, $request->queue
+        );
 
         return response('OK');
     }

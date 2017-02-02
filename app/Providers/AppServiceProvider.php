@@ -6,6 +6,7 @@ use App\Services\CurlService;
 use App\Services\FacebookPagesService;
 use App\Services\GooglePlusService;
 use App\Services\LinkedInService;
+use App\Services\QueueService;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -46,9 +47,14 @@ class AppServiceProvider extends ServiceProvider
             return new UserService;
         });
 
+        // Queue management and events
+        $this->app->bind('App\Service\QueueService', function ($app) {
+            return new QueueService;
+        });
+
         // GooglePlusService
         $this->app->singleton('App\Service\GooglePlusService', function ($app) {
-            return new GooglePlusService(new nxsAPI_GP);
+            return new GooglePlusService(new nxsAPI_GP, $app->make('App\Services\CurlService'));
         });
 
         // FacebookPagesService
