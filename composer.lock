@@ -4,9 +4,69 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6d7dc1b0c131554aa5827f10fc5d56eb",
-    "content-hash": "8ca2c0e95d4b7a13fb4aa837e0733d44",
+    "hash": "e237335cf9cb918accb7303975080774",
+    "content-hash": "a81d271f0fb91e148632a8c83d088905",
     "packages": [
+        {
+            "name": "chilldev/spintax",
+            "version": "dev-master",
+            "target-dir": "ChillDev/Spintax",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chilloutdevelopment/ChillDevSpintax.git",
+                "reference": "901a93b249b25c28167ac692977e7601c399abdb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chilloutdevelopment/ChillDevSpintax/zipball/901a93b249b25c28167ac692977e7601c399abdb",
+                "reference": "901a93b249b25c28167ac692977e7601c399abdb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "ext-xsl": "*",
+                "phpmd/phpmd": "1.5.0",
+                "phpunit/phpunit": "3.7.29",
+                "satooshi/php-coveralls": "0.6.1",
+                "sebastian/phpcpd": "2.0.0",
+                "squizlabs/php_codesniffer": "1.5.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ChillDev\\Spintax": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rafał Wrzeszcz",
+                    "email": "rafal.wrzeszcz@wrzasq.pl",
+                    "homepage": "http://wrzasq.pl/",
+                    "role": "creator,manager,architect,developer"
+                },
+                {
+                    "name": "Chillout Development",
+                    "email": "biuro@chilldev.pl",
+                    "homepage": "http://chilldev.pl/",
+                    "role": "owner"
+                }
+            ],
+            "description": "Spintax {parsing|processing} library.",
+            "homepage": "http://chilloutdevelopment.github.com/ChillDevSpintax",
+            "keywords": [
+                "chilldev",
+                "content generator",
+                "seo",
+                "spintax"
+            ],
+            "time": "2014-01-24 21:29:16"
+        },
         {
             "name": "davejamesmiller/laravel-breadcrumbs",
             "version": "dev-laravel-5.4",
@@ -323,16 +383,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.4.6",
+            "version": "v5.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "5913b960656d7f978605ff9c1513ffbfd190c173"
+                "reference": "600330ae1d218919b3b307e0578461a2df248663"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/5913b960656d7f978605ff9c1513ffbfd190c173",
-                "reference": "5913b960656d7f978605ff9c1513ffbfd190c173",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/600330ae1d218919b3b307e0578461a2df248663",
+                "reference": "600330ae1d218919b3b307e0578461a2df248663",
                 "shasum": ""
             },
             "require": {
@@ -448,7 +508,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-01-27 19:27:15"
+            "time": "2017-02-03 19:47:35"
         },
         {
             "name": "laravel/tinker",
@@ -510,16 +570,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.33",
+            "version": "1.0.34",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "5c7f98498b12d47f9de90ec9186a90000125777c"
+                "reference": "469ad53c13ea19a0e54e3e5d70f61227ddcc0299"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/5c7f98498b12d47f9de90ec9186a90000125777c",
-                "reference": "5c7f98498b12d47f9de90ec9186a90000125777c",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/469ad53c13ea19a0e54e3e5d70f61227ddcc0299",
+                "reference": "469ad53c13ea19a0e54e3e5d70f61227ddcc0299",
                 "shasum": ""
             },
             "require": {
@@ -589,7 +649,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2017-01-23 10:32:09"
+            "time": "2017-01-30 17:41:17"
         },
         {
             "name": "monolog/monolog",
@@ -768,16 +828,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "adf44419c0fc014a0f191db6f89d3e55d4211744"
+                "reference": "5b8182cc0abb4b0ff290ba9df6c0e1323286013a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/adf44419c0fc014a0f191db6f89d3e55d4211744",
-                "reference": "adf44419c0fc014a0f191db6f89d3e55d4211744",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/5b8182cc0abb4b0ff290ba9df6c0e1323286013a",
+                "reference": "5b8182cc0abb4b0ff290ba9df6c0e1323286013a",
                 "shasum": ""
             },
             "require": {
@@ -815,7 +875,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2016-12-06 11:30:35"
+            "time": "2017-02-03 21:57:31"
         },
         {
             "name": "paragonie/random_compat",
@@ -2656,16 +2716,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.9",
+            "version": "5.7.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "69f832b87c731d5cacad7f91948778fe98335fdd"
+                "reference": "bf0804199f516fe80ffcc48ac6d4741c49baeb6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/69f832b87c731d5cacad7f91948778fe98335fdd",
-                "reference": "69f832b87c731d5cacad7f91948778fe98335fdd",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/bf0804199f516fe80ffcc48ac6d4741c49baeb6e",
+                "reference": "bf0804199f516fe80ffcc48ac6d4741c49baeb6e",
                 "shasum": ""
             },
             "require": {
@@ -2682,11 +2742,11 @@
                 "phpunit/php-text-template": "~1.2",
                 "phpunit/php-timer": "^1.0.6",
                 "phpunit/phpunit-mock-objects": "^3.2",
-                "sebastian/comparator": "~1.2.2",
+                "sebastian/comparator": "^1.2.4",
                 "sebastian/diff": "~1.2",
                 "sebastian/environment": "^1.3.4 || ^2.0",
                 "sebastian/exporter": "~2.0",
-                "sebastian/global-state": "^1.0 || ^2.0",
+                "sebastian/global-state": "^1.1",
                 "sebastian/object-enumerator": "~2.0",
                 "sebastian/resource-operations": "~1.0",
                 "sebastian/version": "~1.0|~2.0",
@@ -2734,7 +2794,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-01-28 06:14:33"
+            "time": "2017-02-04 09:03:53"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3417,7 +3477,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "davejamesmiller/laravel-breadcrumbs": 20
+        "davejamesmiller/laravel-breadcrumbs": 20,
+        "chilldev/spintax": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

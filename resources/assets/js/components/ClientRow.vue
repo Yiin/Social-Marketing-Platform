@@ -43,7 +43,7 @@
 
 <script>
     export default {
-        props: ['client', 'onDelete', 'onUpdate'],
+        props: ['client', 'onDelete'],
         data() {
             return {
                 editing: false,
@@ -57,7 +57,7 @@
             save() {
                 this.editing = false;
 
-                this.$http.put(`/client/${this.client.id}`, this.client).then(this.onUpdate);
+                this.$http.put(`/client/${this.client.id}`, this.client);
             },
             remove() {
                 this.confirm = true;

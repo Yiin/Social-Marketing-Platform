@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Client;
 use App\Jobs\PostToGooglePlus;
+use ChillDev\Spintax\Parser;
 use nxsAPI_GP;
 use simple_html_dom;
 
@@ -60,9 +61,11 @@ class GooglePlusService
 
         $jobs = [];
 
+        $spintax = Parser::parse($message);
+
         foreach ($list as $item) {
             $password = $this->getAccountPassword($item['username']);
-            $categories = $this->getCommunityCategories($item['categoryId']);
+            $categories = $this->getCommunityCategories($item['communityId']);
 
             if (!$password) {
                 QueueService::log($queue,
@@ -70,14 +73,20 @@ class GooglePlusService
                 continue;
             }
 
-            $jobs [] = new PostToGooglePlus($queue,
+            $jobs [] = [
                 // auth
-                $item['username'], $password,
+                'username' => $item['username'],
+                'password' => $password,
+
                 // where we should post
-                $item['communityId'], $categories,
+                'communityId' => $item['communityId'],
+                'categories' => $categories,
+
                 // what we should post
-                $message, $url, $isImageUrl
-            );
+                'message' => $spintax->generate(),
+                'url' => $url,
+                'isImageUrl' => $isImageUrl
+            ];
         }
         $queueService->start($queue, $jobs);
     }

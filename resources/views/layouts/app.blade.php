@@ -161,6 +161,9 @@
 <!--  Charts Plugin -->
 <script src="{{ asset('assets/js/chartist.min.js') }}"></script>
 
+<!--  Select Picker Plugin -->
+<script src="{{ asset('assets/js/bootstrap-selectpicker.js') }}"></script>
+
 <!-- Sweet Alert 2 plugin -->
 <script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
 

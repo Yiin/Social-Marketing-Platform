@@ -6,8 +6,10 @@ namespace App\Services;
 use App\Client;
 use App\Events\QueueStarted;
 use App\GooglePlusQueue;
+use App\Jobs\PostToGooglePlus;
 use App\Queue;
 use App\QueueLog;
+use Carbon\Carbon;
 
 class QueueService
 {
@@ -17,12 +19,10 @@ class QueueService
      */
     public function init(Client $client)
     {
-        $queue = new Queue([
+        $queue = Queue::create([
             'type' => Queue::TYPE_GP,
             'client_id' => $client->id
         ]);
-
-        event(new QueueStarted($queue));
 
         return $queue;
     }
@@ -35,7 +35,17 @@ class QueueService
     {
         self::log($queue, "Starting running jobs");
 
-        array_walk($jobs, 'dispatch');
+        foreach ($jobs as $job) {
+            dispatch((new PostToGooglePlus($queue,
+                // auth
+                $job['username'], $job['password'],
+                // where we should post
+                $job['communityId'], $job['categories'],
+                // what we should post
+                $job['message'], $job['url'], $job['isImageUrl']
+            ))->delay(Carbon::now()->addMinutes(1)));
+            \Log::debug('Job dispatched to post to community ' . $job['communityId']);
+        }
     }
 
     public static function log($queue, $message)

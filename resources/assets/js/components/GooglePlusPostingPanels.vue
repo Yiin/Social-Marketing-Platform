@@ -36,6 +36,12 @@
                     </div>
                     <div class="content">
                         <form @submit.prevent="post">
+                            <div class="form-group">
+                                <label>Client</label>
+                                <select data-title="Select Client We Post For" data-style="btn-default btn-block" data-menu-style="dropdown-blue" class="form-control selectpicker" v-model="client_id">
+                                    <option v-for="client in clients" :value="client.id">{{ client.name }}</option>
+                                </select>
+                            </div>
                             <div class="form-group" :class="{ 'has-error': errors.message }">
                                 <label>Message</label>
                                 <input v-model="message" name="message" type="text" placeholder="Enter post message" class="form-control">
@@ -154,6 +160,9 @@
 
 <script>
     export default {
+        props: [
+            'clientsjson'
+        ],
         data() {
             return {
                 done: false,
@@ -161,6 +170,8 @@
                 accounts: [{
                     communities: [{}]
                 }],
+                clients: [],
+                client_id: undefined,
                 message: '',
                 url: '',
                 isImageUrl: false
@@ -178,6 +189,7 @@
             },
             post() {
                 let data = {
+                    client_id: this.client_id,
                     message: this.message,
                     isImageUrl: this.isImageUrl,
                     url: this.url,
@@ -276,6 +288,7 @@
         },
         mounted() {
             this.accounts = [];
+            this.clients = JSON.parse(this.clientsjson);
             this.listeners();
         }
     }

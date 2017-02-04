@@ -20,12 +20,7 @@ class PostToGooglePlus implements ShouldQueue
     /**
      * @var GooglePlusService
      */
-    private $googlePlusService;
-
-    /**
-     * @var User
-     */
-    private $user;
+    private $_queue;
 
     /**
      * Google account username
@@ -73,7 +68,7 @@ class PostToGooglePlus implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param Queue $queue
+     * @param Queue $_queue
      * @param $username
      * @param $password
      * @param $communityId
@@ -83,7 +78,7 @@ class PostToGooglePlus implements ShouldQueue
      * @param $isImageUrl
      */
     public function __construct(
-        Queue $queue,
+        Queue $_queue,
         $username,
         $password,
         $communityId,
@@ -92,7 +87,7 @@ class PostToGooglePlus implements ShouldQueue
         $url,
         $isImageUrl
     ) {
-        $this->queue = $queue;
+        $this->_queue = $_queue;
         $this->username = $username;
         $this->password = $password;
         $this->communityId = $communityId;
@@ -110,10 +105,10 @@ class PostToGooglePlus implements ShouldQueue
      */
     public function handle(GooglePlusService $googlePlusService)
     {
-        QueueService::log($this->queue->id, "Posting to {$this->communityId} categories if there is any...");
+        QueueService::log($this->_queue, "Posting to {$this->communityId} categories if there is any...");
 
         foreach ($this->categories as $category) {
-            QueueService::log($this->queue->id, "Trying to post to category $category...");
+            QueueService::log($this->_queue, "Trying to post to category $category...");
 
             $result = $googlePlusService->post(
                 $this->username,
@@ -125,10 +120,10 @@ class PostToGooglePlus implements ShouldQueue
                 $category
             );
             if (!is_array($result) || !isset($result['isPosted']) || $result['isPosted'] != '1') {
-                QueueService::log($this->queue->id, "Coudn't post to $category");
+                QueueService::log($this->_queue, "Coudn't post to $category");
                 continue;
             }
-            QueueService::log($this->queue->id,
+            QueueService::log($this->_queue,
                 "Posted successfully! PostID: {$result['postID']}, URL: {$result['postURL']}");
 //            $this->queue->
         }

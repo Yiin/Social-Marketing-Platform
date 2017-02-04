@@ -21,7 +21,8 @@ class GooglePlusController extends Controller
 
     public function index()
     {
-        return view('google-plus');
+        $clients = Client::all();
+        return view('google-plus')->with(compact('clients'));
     }
 
     public function post(GooglePlusPost $request)

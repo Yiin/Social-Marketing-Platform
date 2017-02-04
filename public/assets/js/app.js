@@ -1938,7 +1938,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = {
-    props: ['client', 'onDelete', 'onUpdate'],
+    props: ['client', 'onDelete'],
     data: function data() {
         return {
             editing: false,
@@ -1953,7 +1953,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         save: function save() {
             this.editing = false;
 
-            this.$http.put('/client/' + this.client.id, this.client).then(this.onUpdate);
+            this.$http.put('/client/' + this.client.id, this.client);
         },
         remove: function remove() {
             this.confirm = true;
@@ -2034,9 +2034,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$set(this, 'clients', this.clients.filter(function (client) {
                 return client.id !== id;
             }));
-        },
-        onUpdate: function onUpdate(id) {
-            console.log('updated', id);
         }
     },
     mounted: function mounted() {
@@ -2329,8 +2326,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
+    props: ['clientsjson'],
     data: function data() {
         return {
             done: false,
@@ -2338,6 +2342,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             accounts: [{
                 communities: [{}]
             }],
+            clients: [],
+            client_id: undefined,
             message: '',
             url: '',
             isImageUrl: false
@@ -2360,6 +2366,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             var data = {
+                client_id: this.client_id,
                 message: this.message,
                 isImageUrl: this.isImageUrl,
                 url: this.url,
@@ -2467,6 +2474,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         this.accounts = [];
+        this.clients = JSON.parse(this.clientsjson);
         this.listeners();
     }
 };
@@ -30098,6 +30106,37 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Client")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.client_id),
+      expression: "client_id"
+    }],
+    staticClass: "form-control selectpicker",
+    attrs: {
+      "data-title": "Select Client We Post For",
+      "data-style": "btn-default btn-block",
+      "data-menu-style": "dropdown-blue"
+    },
+    on: {
+      "change": function($event) {
+        _vm.client_id = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        })[0]
+      }
+    }
+  }, _vm._l((_vm.clients), function(client) {
+    return _c('option', {
+      domProps: {
+        "value": client.id
+      }
+    }, [_vm._v(_vm._s(client.name))])
+  }))]), _vm._v(" "), _c('div', {
     staticClass: "form-group",
     class: {
       'has-error': _vm.errors.message
@@ -30309,8 +30348,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       tag: "tr",
       attrs: {
         "client": client,
-        "onDelete": _vm.onDelete,
-        "onUpdate": _vm.onUpdate
+        "onDelete": _vm.onDelete
       }
     })
   }), _vm._v(" "), _c('tr', [_c('td'), _vm._v(" "), _c('td', [_c('input', {

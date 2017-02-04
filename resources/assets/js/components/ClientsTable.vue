@@ -10,7 +10,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr is="client-row" v-for="client in clients" :client="client" :onDelete="onDelete" :onUpdate="onUpdate"></tr>
+        <tr is="client-row" v-for="client in clients" :client="client" :onDelete="onDelete"></tr>
         <tr>
             <td></td>
             <td><input type="text" class="form-control" :class="{ error: errors.name }" placeholder="Name" v-model="client.name"></td>
@@ -51,9 +51,6 @@
             },
             onDelete(id) {
                 this.$set(this, 'clients', this.clients.filter(client => client.id !== id));
-            },
-            onUpdate(id) {
-                console.log('updated', id);
             }
         },
         mounted() {
