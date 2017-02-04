@@ -11,6 +11,12 @@ Breadcrumbs::register('profile', function ($breadcrumbs) {
     $breadcrumbs->push('My Profile', route('profile'));
 });
 
+// Dashboard > Profile
+Breadcrumbs::register('client.index', function ($breadcrumbs) {
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Clients', route('client.index'));
+});
+
 // Dashboard > Google+
 Breadcrumbs::register('google-plus', function ($breadcrumbs) {
     $breadcrumbs->parent('dashboard');

@@ -22,6 +22,11 @@ class ComposerServiceProvider extends ServiceProvider
                 'route' => 'profile',
             ],
             [
+                'title' => 'Clients',
+                'icon' => 'pe-7s-users',
+                'route' => 'client.index',
+            ],
+            [
                 'title' => 'Google+',
                 'icon' => 'fa fa-google-plus',
                 'route' => 'google-plus',

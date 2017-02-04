@@ -164,7 +164,12 @@
 <!-- Sweet Alert 2 plugin -->
 <script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
 
+<!--  Bootstrap Table Plugin    -->
+<script src="{{ asset('assets/js/bootstrap-table.js') }}"></script>
+
 <!-- Scripts -->
 <script src="{{ asset('assets/js/app.js') }}"></script>
+
+@yield('scripts')
 
 </html>

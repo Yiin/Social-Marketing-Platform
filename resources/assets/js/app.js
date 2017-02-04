@@ -13,6 +13,16 @@ require('./bootstrap');
  */
 
 Vue.component(
+    'clients-table',
+    require('./components/ClientsTable.vue')
+);
+
+Vue.component(
+    'client-row',
+    require('./components/ClientRow.vue')
+);
+
+Vue.component(
     'google-plus-accounts-table',
     require('./components/GooglePlusAccountsTable.vue')
 );
