@@ -11,11 +11,11 @@ class Queue extends Model
     const TYPE_LI = 'linkedin';
     const TYPE_TW = 'twitter';
 
-    protected $fillable = ['type', 'client_id'];
+    protected $fillable = ['type', 'client_id', 'statistic_groups', 'statistic_members'];
 
     public function log()
     {
-        $this->hasMany(QueueLog::class);
+        return $this->hasMany(QueueLog::class);
     }
 
 }

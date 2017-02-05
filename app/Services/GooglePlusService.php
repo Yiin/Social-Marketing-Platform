@@ -49,8 +49,9 @@ class GooglePlusService
      * @param $url
      * @param $isImageUrl
      * @param array $list
+     * @return \App\Queue
      */
-    public function queuePost(Client $client, $message, $url, $isImageUrl, $list)
+    public function queuePost(Client $client, $delay, $message, $url, $isImageUrl, $list)
     {
         /**
          * @var QueueService $queueService
@@ -65,7 +66,9 @@ class GooglePlusService
 
         foreach ($list as $item) {
             $password = $this->getAccountPassword($item['username']);
+            $communityName = $this->getCommunityName($item['communityId']);
             $categories = $this->getCommunityCategories($item['communityId']);
+            $members = $this->getCommunityMembers($item['communityId']);
 
             if (!$password) {
                 QueueService::log($queue,
@@ -74,12 +77,16 @@ class GooglePlusService
             }
 
             $jobs [] = [
+                'delay' => $delay,
+                'members' => $members,
+
                 // auth
                 'username' => $item['username'],
                 'password' => $password,
 
                 // where we should post
                 'communityId' => $item['communityId'],
+                'communityName' => $communityName,
                 'categories' => $categories,
 
                 // what we should post
@@ -89,9 +96,11 @@ class GooglePlusService
             ];
         }
         $queueService->start($queue, $jobs);
+
+        return $queue;
     }
 
-    public function post($username, $password, $message, $url, $isImageUrl, $communityId, $categoryId)
+    public function post($username, $password, $message, $url, $isImageUrl, $communityId, $categoryId = null)
     {
         $error = $this->api->connect($username, $password);
 
@@ -105,7 +114,14 @@ class GooglePlusService
             ];
         }
 
-        return $this->api->postGP($message, $url, '', $communityId, $categoryId);
+        return [
+            'isPosted' => '1',
+            'postID' => ($postId = str_random() . '-' . str_random()),
+            'postURL' => 'https://plus.google.com/' . $postId,
+            'pDate' => date('Y-m-d H:i:s')
+        ];
+
+//        return $this->api->postGP($message, $url, '', $communityId, $categoryId);
     }
 
     /**
@@ -302,14 +318,22 @@ class GooglePlusService
             $categories = $this->scrapeCategories($html);
 
             // Member count
-            $member_count_array = explode(' ', $html->find('.rZHH0e')[0]->text());
-            $member_count = str_replace(",", "", $member_count_array[0]);
+            $member_count = $this->scrapeMembers($html);
 
             $communities[$index]['categories'] = sizeof($categories);
             $communities[$index]['members'] = $member_count;
 
-            session()->put('nxs_gp.categories.' . $communities[$index]['id'], $categories);
+            session([
+                'nxs_gp.category_name.' . $communities[$index]['id'] => $communities[$index]['name'],
+                'nxs_gp.categories.' . $communities[$index]['id'] => $categories,
+                'nxs_gp.members.' . $communities[$index]['id'] => $member_count
+            ]);
         }
+    }
+
+    public function getCommunityName($communityId)
+    {
+        return session('nxs_gp.category_name.' . $communityId, "Unknown, session expired");
     }
 
     /**
@@ -321,6 +345,7 @@ class GooglePlusService
         if (session()->has('nxs_gp.categories.' . $communityId)) {
             return session('nxs_gp.categories.' . $communityId);
         }
+        \Log::info('getCommunityCategories ' . $communityId);
         $result = $this->curl->get('https://plus.google.com/communities/' . $communityId);
 
         if (!$result) {
@@ -346,5 +371,30 @@ class GooglePlusService
         }
 
         return $categories;
+    }
+
+    private function getCommunityMembers($communityId)
+    {
+        if (session()->has('nxs_gp.members.' . $communityId)) {
+            return session('nxs_gp.members.' . $communityId);
+        }
+        $result = $this->curl->get('https://plus.google.com/communities/' . $communityId);
+
+        if (!$result) {
+            return 0;
+        }
+
+        $html = new simple_html_dom();
+        $html->load($result);
+
+        return $this->scrapeMembers($html);
+    }
+
+    private function scrapeMembers(simple_html_dom $html)
+    {
+        $member_count_array = explode(' ', $html->find('.rZHH0e')[0]->text());
+        $member_count = str_replace(",", "", $member_count_array[0]);
+
+        return (int)$member_count;
     }
 }

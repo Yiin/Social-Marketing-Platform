@@ -25,6 +25,7 @@ class GooglePlusPost extends FormRequest
     {
         return [
             'client_id' => 'required|exists:clients,id',
+            'delay' => 'required|numeric|min:0',
             'message' => 'required',
             'isImageUrl' => 'required',
             'queue' => 'required'

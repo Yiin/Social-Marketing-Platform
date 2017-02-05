@@ -66,12 +66,23 @@ class PostToGooglePlus implements ShouldQueue
     private $isImageUrl;
 
     /**
+     * @var integer
+     */
+    private $members;
+    /**
+     * @var
+     */
+    private $communityName;
+
+    /**
      * Create a new job instance.
      *
      * @param Queue $_queue
+     * @param $members
      * @param $username
      * @param $password
      * @param $communityId
+     * @param $communityName
      * @param $categories
      * @param $message
      * @param $url
@@ -79,9 +90,11 @@ class PostToGooglePlus implements ShouldQueue
      */
     public function __construct(
         Queue $_queue,
+        $members,
         $username,
         $password,
         $communityId,
+        $communityName,
         $categories,
         $message,
         $url,
@@ -95,6 +108,8 @@ class PostToGooglePlus implements ShouldQueue
         $this->message = $message;
         $this->url = $url;
         $this->isImageUrl = $isImageUrl;
+        $this->members = $members;
+        $this->communityName = $communityName;
     }
 
     /**
@@ -105,27 +120,44 @@ class PostToGooglePlus implements ShouldQueue
      */
     public function handle(GooglePlusService $googlePlusService)
     {
-        QueueService::log($this->_queue, "Posting to {$this->communityId} categories if there is any...");
+        $posted = false;
 
-        foreach ($this->categories as $category) {
-            QueueService::log($this->_queue, "Trying to post to category $category...");
+        QueueService::log($this->_queue, json_encode([
+            'type' => 'log',
+            'log_message' => 'Posting to community ' . $this->communityName . ' (' . $this->communityId . ')',
+            'message' => $this->message
+        ]));
 
-            $result = $googlePlusService->post(
-                $this->username,
-                $this->password,
-                $this->message,
-                $this->url,
-                $this->isImageUrl,
-                $this->communityId,
-                $category
-            );
-            if (!is_array($result) || !isset($result['isPosted']) || $result['isPosted'] != '1') {
-                QueueService::log($this->_queue, "Coudn't post to $category");
-                continue;
+        if (empty($this->categories)) {
+            $this->categories [] = null;
+        } else {
+            foreach ($this->categories as $category) {
+                $result = $googlePlusService->post(
+                    $this->username,
+                    $this->password,
+                    $this->message,
+                    $this->url,
+                    $this->isImageUrl,
+                    $this->communityId,
+                    $category
+                );
+                if (!is_array($result) || !isset($result['isPosted']) || $result['isPosted'] != '1') {
+                    QueueService::log($this->_queue, json_encode([
+                        'type' => 'error',
+                        'error_message' => $result
+                    ]));
+                    continue;
+                }
+                QueueService::log($this->_queue, json_encode([
+                    'type' => 'posted',
+                    'link' => $result['postURL']
+                ]));
+                $posted = true;
             }
-            QueueService::log($this->_queue,
-                "Posted successfully! PostID: {$result['postID']}, URL: {$result['postURL']}");
-//            $this->queue->
+        }
+        if ($posted) {
+            $this->_queue->increment('statistic_groups');
+            $this->_queue->increment('statistic_members', $this->members);
         }
     }
 }

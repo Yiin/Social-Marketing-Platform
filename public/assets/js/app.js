@@ -2332,6 +2332,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     props: ['clientsjson'],
@@ -2343,6 +2353,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 communities: [{}]
             }],
             clients: [],
+            delay: 1,
             client_id: undefined,
             message: '',
             url: '',
@@ -2367,6 +2378,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var data = {
                 client_id: this.client_id,
+                delay: this.delay,
                 message: this.message,
                 isImageUrl: this.isImageUrl,
                 url: this.url,
@@ -30106,7 +30118,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_c('div', {
-    staticClass: "form-group"
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.errors.client_id
+    }
   }, [_c('label', [_vm._v("Client")]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
@@ -30136,7 +30151,44 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": client.id
       }
     }, [_vm._v(_vm._s(client.name))])
-  }))]), _vm._v(" "), _c('div', {
+  })), _vm._v(" "), (_vm.errors.client_id) ? _vm._l((_vm.errors.client_id), function(errorMessage) {
+    return _c('label', {
+      staticClass: "error"
+    }, [_vm._v(_vm._s(errorMessage))])
+  }) : _vm._e()], 2), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.errors.delay
+    }
+  }, [_c('label', [_vm._v("Delay between posts (in seconds)")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.delay),
+      expression: "delay"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "placeholder": "Delay between posts (in seconds)",
+      "type": "number"
+    },
+    domProps: {
+      "value": _vm._s(_vm.delay)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.delay = _vm._n($event.target.value)
+      },
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  }), _vm._v(" "), (_vm.errors.delay) ? _vm._l((_vm.errors.delay), function(errorMessage) {
+    return _c('label', {
+      staticClass: "error"
+    }, [_vm._v(_vm._s(errorMessage))])
+  }) : _vm._e()], 2), _vm._v(" "), _c('div', {
     staticClass: "form-group",
     class: {
       'has-error': _vm.errors.message

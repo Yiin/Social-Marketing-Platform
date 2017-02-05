@@ -29,11 +29,11 @@ class GooglePlusController extends Controller
     {
         $client = Client::find($request->client_id);
 
-        $this->googlePlusService->queuePost(
-            $client, $request->message, $request->url, $request->isImageUrl, $request->queue
+        $queue = $this->googlePlusService->queuePost(
+            $client, $request->delay, $request->message, $request->url, $request->isImageUrl, $request->queue
         );
 
-        return response('OK');
+        return response('OK ' . $queue->id);
     }
 
     public function accounts()

@@ -12,4 +12,9 @@ class QueueLog extends Model
     {
         return $this->belongsTo(Queue::class);
     }
+
+    public function getLogAttribute()
+    {
+        return json_decode($this->getOriginal('log'));
+    }
 }

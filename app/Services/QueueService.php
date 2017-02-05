@@ -36,15 +36,15 @@ class QueueService
         self::log($queue, "Starting running jobs");
 
         foreach ($jobs as $job) {
-            dispatch((new PostToGooglePlus($queue,
+            dispatch((new PostToGooglePlus($queue, $job['members'],
                 // auth
                 $job['username'], $job['password'],
                 // where we should post
-                $job['communityId'], $job['categories'],
+                $job['communityId'], $job['communityName'], $job['categories'],
                 // what we should post
                 $job['message'], $job['url'], $job['isImageUrl']
-            ))->delay(Carbon::now()->addMinutes(1)));
-            \Log::debug('Job dispatched to post to community ' . $job['communityId']);
+            ))->delay(Carbon::now()->addMinutes($job['delay'])));
+            \Log::debug('Job dispatched to post to community ' . $job['communityName'] . ' (' . $job['communityId'] . ')');
         }
     }
 

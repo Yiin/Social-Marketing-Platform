@@ -36,11 +36,21 @@
                     </div>
                     <div class="content">
                         <form @submit.prevent="post">
-                            <div class="form-group">
+                            <div class="form-group" :class="{ 'has-error': errors.client_id }">
                                 <label>Client</label>
                                 <select data-title="Select Client We Post For" data-style="btn-default btn-block" data-menu-style="dropdown-blue" class="form-control selectpicker" v-model="client_id">
                                     <option v-for="client in clients" :value="client.id">{{ client.name }}</option>
                                 </select>
+                                <template v-if="errors.client_id">
+                                    <label v-for="errorMessage in errors.client_id" class="error">{{ errorMessage }}</label>
+                                </template>
+                            </div>
+                            <div class="form-group" :class="{ 'has-error': errors.delay }">
+                                <label>Delay between posts (in seconds)</label>
+                                <input v-model="delay" placeholder="Delay between posts (in seconds)" type="number" class="form-control">
+                                <template v-if="errors.delay">
+                                    <label v-for="errorMessage in errors.delay" class="error">{{ errorMessage }}</label>
+                                </template>
                             </div>
                             <div class="form-group" :class="{ 'has-error': errors.message }">
                                 <label>Message</label>
@@ -171,6 +181,7 @@
                     communities: [{}]
                 }],
                 clients: [],
+                delay: 1,
                 client_id: undefined,
                 message: '',
                 url: '',
@@ -190,6 +201,7 @@
             post() {
                 let data = {
                     client_id: this.client_id,
+                    delay: this.delay,
                     message: this.message,
                     isImageUrl: this.isImageUrl,
                     url: this.url,

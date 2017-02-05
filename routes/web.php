@@ -11,6 +11,8 @@
 |
 */
 
+use App\Queue;
+
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
@@ -28,4 +30,16 @@ Route::middleware('auth')->group(function () {
     Route::post('api/google-plus/logout-account', 'GooglePlusController@logoutAccount');
     Route::post('api/google-plus/communities', 'GooglePlusController@accountCommunities');
     Route::post('api/google-plus/post', 'GooglePlusController@post');
+
+    Route::get('statistics/{queue}', function (Queue $queue) {
+        return view('statistic')->with(compact('queue'));
+    });
+
+    Route::get('wtf', function () {
+        session()->flush();
+    });
+
+    Route::get('session', function () {
+        dd(session()->all());
+    });
 });
