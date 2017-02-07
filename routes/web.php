@@ -31,15 +31,21 @@ Route::middleware('auth')->group(function () {
     Route::post('api/google-plus/communities', 'GooglePlusController@accountCommunities');
     Route::post('api/google-plus/post', 'GooglePlusController@post');
 
+    Route::name('facebook')->get('facebook', 'FacebookController@index');
+    Route::get('api/facebook/accounts', 'FacebookController@accounts');
+    Route::post('api/facebook/add-account', 'FacebookController@addAccount');
+    Route::post('api/facebook/logout-account', 'FacebookController@logoutAccount');
+    Route::post('api/facebook/communities', 'FacebookController@accountCommunities');
+    Route::post('api/facebook/post', 'FacebookController@post');
+
+    Route::name('linkedin')->get('linkedin', 'LinkedInController@index');
+    Route::get('api/linkedin/accounts', 'LinkedInController@accounts');
+    Route::post('api/linkedin/add-account', 'LinkedInController@addAccount');
+    Route::post('api/linkedin/logout-account', 'LinkedInController@logoutAccount');
+    Route::post('api/linkedin/communities', 'LinkedInController@accountCommunities');
+    Route::post('api/linkedin/post', 'LinkedInController@post');
+
     Route::get('statistics/{queue}', function (Queue $queue) {
         return view('statistic')->with(compact('queue'));
-    });
-
-    Route::get('wtf', function () {
-        session()->flush();
-    });
-
-    Route::get('session', function () {
-        dd(session()->all());
     });
 });

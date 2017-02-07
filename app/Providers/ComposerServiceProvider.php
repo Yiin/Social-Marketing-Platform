@@ -30,12 +30,7 @@ class ComposerServiceProvider extends ServiceProvider
                 'title' => 'Google+',
                 'icon' => 'fa fa-google-plus',
                 'route' => 'google-plus',
-            ],
-            [
-                'title' => 'Facebook',
-                'icon' => 'fa fa-facebook',
-                'route' => 'dashboard',
-            ],
+            ]
         ]);
     }
 

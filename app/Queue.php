@@ -18,4 +18,9 @@ class Queue extends Model
         return $this->hasMany(QueueLog::class);
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }

@@ -15,16 +15,22 @@
                 <template v-if="done">
                     <div class="header">
                         <h4 class="title">Posting was successfully queued!</h4>
-                        <p class="category">You will get detailed report after posting is completed.</p>
+                        <p class="category">
+                            <a :href="`http://smp.x.yiin.lt/statistics/${queue_id}`" target="_blank">
+                                http://smp.x.yiin.lt/statistics/{{ queue_id }}
+                            </a>
+                        </p>
                     </div>
 
                     <div class="content">
                         <p>
-                            We will send you an email with all the important information
-                            and statistics after all posts will go through.
+                            To see the progress, visit this url:
+                            <a :href="`http://smp.x.yiin.lt/statistics/${queue_id}`" target="_blank">
+                                http://smp.x.yiin.lt/statistics/{{ queue_id }}
+                            </a>
                         </p>
                         <p>
-                            Usually posting is completed in up to 15 minutes, but that
+                            Usually posting is completed within 15 minutes, but time
                             can vary depending on number of posts.
                         </p>
                         <button @click="done = false" class="btn">Alright</button>
@@ -185,7 +191,8 @@
                 client_id: undefined,
                 message: '',
                 url: '',
-                isImageUrl: false
+                isImageUrl: false,
+                queue_id: 'ERROR'
             }
         },
         methods: {
@@ -223,6 +230,7 @@
                     this.isImageUrl = false;
                     this.url = '';
                     this.resetSelection();
+                    this.queue_id = response.body;
                 }).catch(response => {
                     this.errors = response.body;
                 });

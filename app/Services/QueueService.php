@@ -33,8 +33,6 @@ class QueueService
      */
     public function start(Queue $queue, $jobs)
     {
-        self::log($queue, "Starting running jobs");
-
         foreach ($jobs as $job) {
             dispatch((new PostToGooglePlus($queue, $job['members'],
                 // auth

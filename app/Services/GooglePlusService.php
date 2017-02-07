@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Client;
-use App\Jobs\PostToGooglePlus;
-use ChillDev\Spintax\Parser;
 use nxsAPI_GP;
 use simple_html_dom;
 
@@ -62,8 +60,6 @@ class GooglePlusService
 
         $jobs = [];
 
-        $spintax = Parser::parse($message);
-
         foreach ($list as $item) {
             $password = $this->getAccountPassword($item['username']);
             $communityName = $this->getCommunityName($item['communityId']);
@@ -90,7 +86,7 @@ class GooglePlusService
                 'categories' => $categories,
 
                 // what we should post
-                'message' => $spintax->generate(),
+                'message' => $message,
                 'url' => $url,
                 'isImageUrl' => $isImageUrl
             ];
@@ -114,14 +110,14 @@ class GooglePlusService
             ];
         }
 
-        return [
-            'isPosted' => '1',
-            'postID' => ($postId = str_random() . '-' . str_random()),
-            'postURL' => 'https://plus.google.com/' . $postId,
-            'pDate' => date('Y-m-d H:i:s')
-        ];
+//        return [
+//            'isPosted' => '1',
+//            'postID' => ($postId = str_random() . '-' . str_random()),
+//            'postURL' => 'https://plus.google.com/' . $postId,
+//            'pDate' => date('Y-m-d H:i:s')
+//        ];
 
-//        return $this->api->postGP($message, $url, '', $communityId, $categoryId);
+        return $this->api->postGP($message, $url, '', $communityId, $categoryId);
     }
 
     /**

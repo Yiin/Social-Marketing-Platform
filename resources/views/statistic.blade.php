@@ -13,14 +13,22 @@
                     <div class="content">
                         @foreach($queue->log()->orderBy('id', 'desc')->get() as $log)
                             <div>
-                                @if($log->log->type === 'error')
-                                    <label class="error">{{ $log->log->error }}</label>
-                                @elseif($log->log->type === 'log')
-                                    <h3>{{ $log->log->log_message }}</h3>
-                                    <p>{{ $log->log->message }}</p>
-                                    <h4>Posts:</h4>
-                                @else
-                                    <a href="{{ $log->log->link }}">{{ $log->log->link }}</a>
+                                @if($log->log->type === 'log')
+                                    <h4 class="title">Posting to "{{ $log->log->communityName }}"</h4>
+                                    <div class="content">
+                                        @if($queue->posts()->where('group', $log->log->communityId)->exists())
+                                            Posts:
+                                        @endif
+                                        <ul>
+                                            @foreach($queue->posts()->where('group', $log->log->communityId)->get() as $post)
+                                                <li>
+                                                    <a href="{{ $post->url }}" target="_blank">{{ $post->message }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @elseif ($log->log->type === 'error')
+                                    <label class="error">{{ $log->log->error_message }}</label>
                                 @endif
                             </div>
                         @endforeach

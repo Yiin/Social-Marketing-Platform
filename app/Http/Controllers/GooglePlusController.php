@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Client;
-use App\Http\Requests\AddGooglePlusAccount;
-use App\Http\Requests\GetGooglePlusAccountCommunities;
-use App\Http\Requests\GetGooglePlusCommunityInfo;
-use App\Http\Requests\GooglePlusPost;
-use App\Http\Requests\LogoutGooglePlusAccount;
+use App\Http\Requests\GooglePlus\AddGooglePlusAccount;
+use App\Http\Requests\GooglePlus\GetGooglePlusAccountCommunities;
+use App\Http\Requests\GooglePlus\GetGooglePlusCommunityInfo;
+use App\Http\Requests\GooglePlus\GooglePlusPost;
+use App\Http\Requests\GooglePlus\LogoutGooglePlusAccount;
 use App\Services\GooglePlusService;
 
 class GooglePlusController extends Controller
@@ -33,7 +33,7 @@ class GooglePlusController extends Controller
             $client, $request->delay, $request->message, $request->url, $request->isImageUrl, $request->queue
         );
 
-        return response('OK ' . $queue->id);
+        return response($queue->id);
     }
 
     public function accounts()

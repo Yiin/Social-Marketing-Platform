@@ -22,3 +22,15 @@ Breadcrumbs::register('google-plus', function ($breadcrumbs) {
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push('Google Plus', route('google-plus'));
 });
+
+// Dashboard > Facebook
+Breadcrumbs::register('facebook', function ($breadcrumbs) {
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Facebook', route('facebook'));
+});
+
+// Dashboard > LinkedIn
+Breadcrumbs::register('linkedin', function ($breadcrumbs) {
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('LinkedIn', route('linkedin'));
+});
